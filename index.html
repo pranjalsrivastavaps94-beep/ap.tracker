@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pranjal Study Tracker Pro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Focused study web app</p>
+        <h1 id="brandTitle">Pranjal Study Tracker Pro</h1>
+        <p class="hero-sub">
+          Guest mode, cloud login, unlimited tasks, timer, subject tracker, revision planner and month graph.
+        </p>
+      </div>
+
+      <div id="topUser" class="top-user hidden">
+        <span id="userBadge" class="pill"></span>
+        <button id="logoutBtn" class="btn danger">Logout</button>
+      </div>
+    </header>
+
+    <section id="authView" class="auth-grid">
+      <div class="card">
+        <h2>Start Fast</h2>
+        <p class="muted">
+          Guest se turant use karo. Baad me account banaoge to guest data same account me link ho sakta hai.
+        </p>
+
+        <div class="stack">
+          <button id="guestBtn" class="btn primary full">Continue as Guest</button>
+          <button id="googleBtn" class="btn secondary full">Continue with Google</button>
+        </div>
+
+        <div class="note-box">
+          <strong>Important</strong>
+          <p>
+            Signup yahan <b>Name + Email + Password</b> se hai. Name/password-only secure system ke liye custom backend chahiye.
+          </p>
+        </div>
+
+        <div class="note-box">
+          <strong>Phone OTP</strong>
+          <p>
+            Optional hai, lekin is version me nahi diya gaya. Base build ko stable rakha gaya hai.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="auth-split">
+          <div>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="form-grid">
+              <input id="signupName" type="text" placeholder="Full name" required />
+              <input id="signupEmail" type="email" placeholder="Email" required />
+              <input id="signupPassword" type="password" placeholder="Password (min 6)" required />
+              <button type="submit" class="btn primary full">Sign Up</button>
+            </form>
+          </div>
+
+          <div>
+            <h2>Login</h2>
+            <form id="loginForm" class="form-grid">
+              <input id="loginEmail" type="email" placeholder="Email" required />
+              <input id="loginPassword" type="password" placeholder="Password" required />
+              <button type="submit" class="btn secondary full">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appView" class="hidden">
+      <div class="toolbar">
+        <button id="notifBtn" class="btn ghost">Enable Notifications</button>
+        <span id="syncInfo" class="muted small"></span>
+      </div>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span>Today Study</span>
+          <strong id="statToday">0h 0m</strong>
+        </div>
+        <div class="stat-card">
+          <span>This Week</span>
+          <strong id="statWeek">0h 0m</strong>
+        </div>
+        <div class="stat-card">
+          <span>This Month</span>
+          <strong id="statMonth">0h 0m</strong>
+        </div>
+        <div class="stat-card">
+          <span>Current Streak</span>
+          <strong id="statStreak">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Pending Goals</span>
+          <strong id="statPending">0</strong>
+        </div>
+        <div class="stat-card">
+          <span>Next Subject</span>
+          <strong id="statNextSubject">-</strong>
+        </div>
+      </section>
+
+      <section class="layout">
+        <div class="col">
+          <div class="card">
+            <div class="head-row">
+              <h2>Task Manager</h2>
+              <span class="pill">Infinite tasks</span>
+            </div>
+
+            <form id="taskForm" class="task-form">
+              <input id="taskText" type="text" placeholder="Task title" required />
+              <input id="taskSubject" type="text" placeholder="Subject" />
+              <select id="taskPriority">
+                <option value="Low">Low Priority</option>
+                <option value="Medium" selected>Medium Priority</option>
+                <option value="High">High Priority</option>
+              </select>
+              <input id="taskDeadline" type="date" />
+              <button type="submit" class="btn primary">Add Task</button>
+            </form>
+
+            <div class="filters">
+              <select id="statusFilter">
+                <option value="all">All Tasks</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+
+              <select id="subjectFilter">
+                <option value="">All Subjects</option>
+              </select>
+            </div>
+
+            <div id="taskList" class="list"></div>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Notes / Quick Points</h2>
+              <span class="pill">Formula / revision points</span>
+            </div>
+
+            <form id="noteForm" class="note-form">
+              <textarea id="noteText" rows="3" placeholder="Write a note or formula point..."></textarea>
+              <button type="submit" class="btn secondary">Save Note</button>
+            </form>
+
+            <div id="noteList" class="list compact"></div>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Revision Planner</h2>
+              <span class="pill">1, 3, 7, 15 day plan</span>
+            </div>
+
+            <form id="revisionForm" class="revision-form">
+              <input id="revisionTopic" type="text" placeholder="Topic name" required />
+              <input id="revisionBaseDate" type="date" required />
+              <button type="submit" class="btn primary">Create Plan</button>
+            </form>
+
+            <div id="revisionList" class="list compact"></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card">
+            <div class="head-row">
+              <h2>Study Timer</h2>
+              <span id="phaseBadge" class="pill">Stopwatch</span>
+            </div>
+
+            <div class="timer-controls">
+              <select id="timerMode">
+                <option value="stopwatch">Stopwatch</option>
+                <option value="pomodoro">Pomodoro</option>
+              </select>
+              <input id="timerSubject" type="text" placeholder="Session subject" />
+            </div>
+
+            <div class="pomodoro-grid">
+              <label>
+                Focus (min)
+                <input id="focusMin" type="number" min="1" value="25" />
+              </label>
+              <label>
+                Short Break
+                <input id="shortBreakMin" type="number" min="1" value="5" />
+              </label>
+              <label>
+                Long Break
+                <input id="longBreakMin" type="number" min="1" value="15" />
+              </label>
+            </div>
+
+            <div id="timerDisplay" class="timer-display">00:00:00</div>
+
+            <div class="button-row">
+              <button id="startBtn" class="btn primary">Start</button>
+              <button id="pauseBtn" class="btn secondary">Pause</button>
+              <button id="resetBtn" class="btn ghost">Reset</button>
+              <button id="saveSessionBtn" class="btn success">Save Session</button>
+            </div>
+
+            <p id="timerHint" class="muted">
+              Stopwatch me manual save karo. Pomodoro me focus session complete hote hi study hours add ho jayenge.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Profile & Targets</h2>
+              <span class="pill">Editable</span>
+            </div>
+
+            <form id="profileForm" class="profile-grid">
+              <input id="profileAppName" type="text" placeholder="App name" />
+              <input id="profileName" type="text" placeholder="Your name" />
+              <input id="profileClass" type="text" placeholder="Class" />
+              <input id="profileExam" type="text" placeholder="Exam target" />
+              <input id="profileDailyTarget" type="number" min="0" step="0.5" placeholder="Daily target hours" />
+              <input id="profileWeeklyTarget" type="number" min="0" step="0.5" placeholder="Weekly target hours" />
+              <input id="profileSubjects" type="text" placeholder="Favorite subjects (comma separated)" />
+              <button type="submit" class="btn primary full">Save Profile</button>
+            </form>
+
+            <div class="target-wrap">
+              <div class="target-box">
+                <div class="target-head">
+                  <span>Daily Target</span>
+                  <strong id="dailyTargetText">0%</strong>
+                </div>
+                <div class="progress"><span id="dailyBar"></span></div>
+              </div>
+
+              <div class="target-box">
+                <div class="target-head">
+                  <span>Weekly Target</span>
+                  <strong id="weeklyTargetText">0%</strong>
+                </div>
+                <div class="progress"><span id="weeklyBar"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Subject Tracker</h2>
+              <span id="comparisonText" class="pill">This week vs last week</span>
+            </div>
+            <div id="subjectSummary" class="list compact"></div>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Month Study Hours</h2>
+              <span id="monthLabel" class="pill">0h 0m</span>
+            </div>
+            <canvas id="monthChart" height="300"></canvas>
+          </div>
+
+          <div class="card">
+            <div class="head-row">
+              <h2>Upcoming Calendar</h2>
+              <span class="pill">Tasks + Revisions</span>
+            </div>
+            <div id="upcomingList" class="list compact"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
