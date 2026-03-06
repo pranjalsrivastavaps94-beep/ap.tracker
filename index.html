@@ -282,6 +282,63 @@
     <div id="toast" class="toast"></div>
   </div>
 
-  <script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>  <!-- DASHBOARD UI -->
+<div id="dashboardUI" class="dashboard-ui hidden">
+
+<div class="sidebar">
+<h2>Study Pro</h2>
+
+<button onclick="showSection('dashboard')">Dashboard</button>
+<button onclick="showSection('planner')">Planner</button>
+<button onclick="showSection('tasks')">Tasks</button>
+<button onclick="showSection('timer')">Timer</button>
+<button onclick="showSection('notes')">Notes</button>
+<button onclick="showSection('goals')">Goals</button>
+<button onclick="showSection('habits')">Habits</button>
+<button onclick="showSection('admin')">Admin</button>
+
+</div>
+
+<div class="main">
+
+<h1>Dashboard</h1>
+
+<div class="stats">
+
+<div class="card">
+<h3>Aaj ka Target</h3>
+<p id="dailyTarget">5 hrs</p>
+</div>
+
+<div class="card">
+<h3>Study Time Today</h3>
+<p id="studyTime">0 min</p>
+</div>
+
+<div class="card">
+<h3>Pending Tasks</h3>
+<p id="pendingTasks">0</p>
+</div>
+
+<div class="card">
+<h3>Progress</h3>
+<p id="progress">0%</p>
+</div>
+
+</div>
+
+<div class="card big">
+<h3>Quick Settings</h3>
+
+<input id="targetInput" type="number" placeholder="Daily target hours">
+
+<button onclick="saveTarget()">Save Settings</button>
+
+</div>
+
+</div>
+
+</div>
 </body>
 </html>
+
