@@ -1493,4 +1493,156 @@ document.getElementById("dailyTarget").innerText=saved+" hrs";
 }
 
 window.addEventListener("load",loadTarget);
+/* =========================
+   REAL MONTH STUDY GRAPH
+========================= */
+
+function generateMonthData(){
+
+const days = new Date(new Date().getFullYear(), new Date().getMonth()+1,0).getDate()
+
+let data=[]
+
+for(let i=1;i<=days;i++){
+
+const key="study_"+i
+
+let val=localStorage.getItem(key)
+
+if(!val){val=0}
+
+data.push(Number(val))
+
+}
+
+return data
+}
+
+
+function drawMonthGraph(){
+
+const ctx=document.getElementById("monthChart")
+
+if(!ctx) return
+
+const labels=[]
+
+const days = new Date(new Date().getFullYear(), new Date().getMonth()+1,0).getDate()
+
+for(let i=1;i<=days;i++){labels.push(i)}
+
+const data=generateMonthData()
+
+new Chart(ctx,{
+
+type:"line",
+
+data:{
+labels:labels,
+datasets:[{
+label:"Hours",
+data:data,
+borderColor:"#5a8cff",
+backgroundColor:"rgba(90,140,255,0.2)",
+tension:0.4
+}]
+},
+
+options:{
+responsive:true,
+plugins:{legend:{display:false}},
+scales:{y:{beginAtZero:true}}
+}
+
+})
+
+}
+
+
+/* =========================
+   SAVE STUDY TIME
+========================= */
+
+function saveStudySession(hours){
+
+const day=new Date().getDate()
+
+const key="study_"+day
+
+let prev=localStorage.getItem(key)
+
+if(!prev){prev=0}
+
+localStorage.setItem(key,Number(prev)+hours)
+
+}
+
+
+/* =========================
+   REAL DATE + CLOCK
+========================= */
+
+function updateClock(){
+
+const now=new Date()
+
+const time=now.toLocaleTimeString()
+
+const date=now.toDateString()
+
+const el=document.getElementById("currentDateTime")
+
+if(el){
+el.innerText=date+" | "+time
+}
+
+}
+
+setInterval(updateClock,1000)
+
+
+/* =========================
+   AUTO CALENDAR EVENTS
+========================= */
+
+function generateCalendar(){
+
+const list=document.getElementById("upcomingList")
+
+if(!list) return
+
+list.innerHTML=""
+
+const today=new Date()
+
+for(let i=0;i<7;i++){
+
+const d=new Date()
+
+d.setDate(today.getDate()+i)
+
+const item=document.createElement("div")
+
+item.className="calendar-item"
+
+item.innerText=d.toDateString()
+
+list.appendChild(item)
+
+}
+
+}
+
+
+/* =========================
+   INIT
+========================= */
+
+window.addEventListener("load",()=>{
+
+drawMonthGraph()
+
+generateCalendar()
+
+})
 
