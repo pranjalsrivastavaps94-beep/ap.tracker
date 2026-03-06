@@ -613,3 +613,17 @@ margin-top:20px;
 .hidden{
 display:none;
 }
+.layout{
+display:grid;
+grid-template-columns: 1fr 1fr;
+gap:20px;
+width:100%;
+max-width:1400px;
+margin:auto;
+}
+
+@media (max-width:900px){
+.layout{
+grid-template-columns:1fr;
+}
+}
